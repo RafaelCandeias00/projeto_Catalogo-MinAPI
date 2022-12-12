@@ -1,10 +1,13 @@
 using CatalogoMinAPI.ApiEndpoints;
+using CatalogoMinAPI.AppServicesExtensions;
 using CatalogoMinAPI.Context;
 using CatalogoMinAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -73,11 +76,10 @@ app.MapCategoriaEndpoint(); // CATEGORIA
 app.MapProdutoEndpoints(); // PRODUTO
 
 // -- Configure --
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+var environment = app.Environment;
+app.UseExceptionHandling(environment)
+    .UseSwaggerMiddleware()
+    .UseAppCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
