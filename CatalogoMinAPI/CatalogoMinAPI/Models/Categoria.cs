@@ -1,4 +1,6 @@
-﻿namespace CatalogoMinAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace CatalogoMinAPI.Models
 {
     public class Categoria
     {
@@ -6,6 +8,7 @@
         public string? Nome { get; set; }
         public string? Descricao { get; set; }
 
+        [JsonIgnore]
         public ICollection<Produto>? Produtos { get; set; }
     }
 }
